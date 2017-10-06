@@ -1,0 +1,26 @@
+#!/bin/bash
+#synatx on
+#Jaanika Müürisepp
+#
+for kasutaja in $(ls /home)
+do
+	#tuleb vaadata iga kaustaja kodukataloog
+	# ja kontrollida, kas seal on olemas public kaust
+	ls /home/$kasutaja | grep public > /dev/null
+	#kui on leitud, siis käsu exit staatus on 0
+	#kui ei aga grep tegi töö korralikult, siis staatus on 1
+	if [ $? -eq 1 ]; then
+	#siis loome antud kataloogi
+	mkdir /home/$kasutaja /public && chown -R $kasutaja :$kasutaja /home/$kasutaja /public && chmod 751 /home/$kasutaja /public
+	# ja kontrollime, kas sai loodud
+	if [ $? -eq 0 ]; then 
+	echo "Kasutaja $kasutaja on kodukaustas public loodud!"
+	ls -la /home/$kasutajanimi
+	else
+	echo "Probleem kasutaja $kasutaja public lisamisega!"
+	echo "Probleemi kood on $?"
+	fi
+else
+	echo "Kasutaja $kasutaja on kodukaustas public olemas."
+fi
+done
