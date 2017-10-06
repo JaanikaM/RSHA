@@ -1,0 +1,25 @@
+#!/bin/bash
+#
+#syntax on
+#
+#Jaanika Müürisepp
+# Kasutaja public kausta lisamise skript
+if [ $# -ne 1 ]; then
+	echo "Kasutusjuhend: $0 kasutajanimi"
+else
+	kasutajanimi=$1
+	mkdir /home/$kasutajanimi/public && chown -R $kasutajanimi:$kasutajanimi /home/$kasutajanimi/public && chmod 751 /home/$kasutajanimi/public
+#Pika rea lõpp
+#Pmt kõik aga kas sobib või ei? 
+# Kontrollime
+# $? -viimase! käsu väljund staatus, 0 kui on korras, muu, kui on probleem
+if [ $? -eq 0 ]; then
+	echo "Kasutaja nimega $kasutajanimi on Publick kodukaustas loodud!"
+	cat /etc/passwd | grep $kasutajanimi
+	ls -la /home/$kasutajanimi
+else
+	echo "Probleem kasutaja $kasutajanimi lisamisega."
+	echo "Probleemi kood on $?"
+	fi
+# Skripti õige kasutamise kontrolli lõpp
+fi
